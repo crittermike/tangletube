@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="description" content="TangleTube lets you play multiple YouTube videos together, at the same time. You can also create groups of videos to share with others." />
+    <meta name="keywords" content="videos, youtube, play videos together, play youtube videos, youtube videos at the same time, group youtube videos, group videos, video groups,youtube groupings" />
+    <title>TangleTube - Create bundles of YouTube videos and play them together</title>
+
+    <script language="javascript" src="js/lib/jquery.js" type="text/javascript"></script>
+    <script language="javascript" src="js/lib/ember.js" type="text/javascript"></script>
+    <script language="javascript" src="js/lib/tubeplayer.js" type="text/javascript"></script>
+    <script language="javascript" src="js/lib/bootstrap-modal.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-6322775-16']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">TangleTube:<span>&nbsp;&nbsp;Create bundles of YouTube videos and play them together.</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="videos">
+        <div class="well">
+
+          <script type="text/x-handlebars">
+            {{#view App.AddVideoView}}
+              <input id="linkfield" name="linkfield" type="text" placeholder="Paste YouTube link" />
+              <button type="submit" class="btn"><i class="icon-plus"></i> Add Video</button>
+            {{/view}}
+            {{#view App.VideoControlsView}}
+              <div class="btn-group">
+                <button {{action "rewind"}} class="btn"><i class="icon-fast-backward"></i></button>
+                <button {{action "pause"}} class="btn"><i class="icon-pause"></i></button>
+                <button {{action "play"}} class="btn btn-success"><i class="icon-play"></i> Play All</button>
+              </div>
+              <a id="linkbutton" data-toggle="modal" href="#linkModal" class="btn btn-info"><i class="icon-share"></i> Share Link</a>
+            {{/view}}
+          </script>
+
+        </div>
+
+        <ul>
+          <script type="text/x-handlebars">
+            {{#each App.videosController.content}}
+              {{#view App.VideoView videoBinding="this"}}
+                <button {{action "delete"}}>X</button>
+              {{/view}}
+            {{/each}}
+          </script>
+        </ul>
+
+      </div>
+    </div>
+
+    <div id="linkModal" class="modal" style="display: none;">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Share the link</h3>
+      </div>
+      <div class="modal-body">
+        <p>Copy and paste this link anywhere to share this bundle.</p>
+          <script type="text/x-handlebars">
+            <input style="width: 97%" type="text" name="linkinput" id="linkinput" {{bindAttr value="App.videosController.toQueryString"}} />
+          </script>
+      </div>
+    </div>
+
+    <script language="javascript" src="js/app.js" type="text/javascript"></script>
+  </body>
+</html>

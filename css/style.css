@@ -1,0 +1,59 @@
+body {
+  padding-top: 70px;
+}
+.brand span {
+  font-size: 14px;
+  position: relative;
+  top: -1px;
+}
+
+.btn-group, #linkbutton {
+  float: right;
+}
+#linkbutton {
+  margin-right: 20px;
+}
+.form-inline {
+  width: 50%;
+  margin-bottom: 0;
+  float: left;
+}
+.well {
+  overflow: hidden;
+}
+
+#videos ul,
+#videos li {
+  list-style: none;
+  padding: 0; 
+  margin: 0;
+}
+#videos li {
+  float: left;
+  width: 470px;
+  margin: 0;
+  line-height: 0;
+  position: relative;
+}
+#videos li button {
+  border: 0;
+  background: #FFE8E8;
+  text-shadow: white 1px 1px;
+  border-radius: 10px 0 0 10px;
+  padding-left: 9px;
+  padding-right: 5px;
+  position: absolute;
+  left: -23px;
+  top: 0;
+}
+#videos li:nth-child(2n) button {
+  border-radius: 0 10px 10px 0;
+  padding-right: 9px;
+  padding-left: 5px;
+  left: auto;
+  right: -23px;
+}
+#videos li button:hover {
+  background: red;
+  text-shadow: #FF9696 1px 1px;
+}
