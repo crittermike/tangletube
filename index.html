@@ -43,11 +43,8 @@
       <div id="videos">
         <div class="well">
 
+          <button href="#addModal" data-toggle="modal" class="add-button btn"><i class="icon-plus"></i> Add Video</button>
           <script type="text/x-handlebars">
-            {{#view App.AddVideoView}}
-              <input id="linkfield" name="linkfield" type="text" placeholder="Paste YouTube link" />
-              <button type="submit" class="btn"><i class="icon-plus"></i> Add Video</button>
-            {{/view}}
             {{#view App.VideoControlsView}}
               <div class="btn-group">
                 <button {{action "rewind"}} class="btn"><i class="icon-fast-backward"></i></button>
@@ -83,6 +80,46 @@
           <script type="text/x-handlebars">
             <input style="width: 97%" type="text" name="linkinput" id="linkinput" {{bindAttr value="App.videosController.toQueryString"}} />
           </script>
+      </div>
+    </div>
+
+    <div id="addModal" class="modal" style="display: none;">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Add a video</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label" for="videoInput">YouTube video</label>
+            <div class="controls">
+              <input class="input-xlarge" id="videoInput" type="text" />
+              <p class="help-block">Paste in a link to a YouTube video</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="volumeInput">Starting volume</label>
+            <div class="controls">
+              <input id="volumeInput" class="span1" type="text" value="100" />
+              <p class="help-block">Enter the starting volume as a number 1-100.</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="timeInput">Start time</label>
+            <div class="controls">
+              <input id="timeInput" class="span1" type="text" value="0" />
+              <p class="help-block">Enter the start time as a number of seconds (e.g. 120)</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <script type="text/x-handlebars">
+          {{#view App.AddVideoView}}
+            <a href="#" {{action "addVideo"}} class="btn btn-primary"><i class="icon-white icon-plus"></i> Add Video</a>
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+          {{/view}}
+        </script>
       </div>
     </div>
 

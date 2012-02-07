@@ -21,6 +21,9 @@ body {
 .well {
   overflow: hidden;
 }
+.add-button {
+  float: left;
+}
 
 #videos ul,
 #videos li {

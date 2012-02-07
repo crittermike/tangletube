@@ -1,14 +1,24 @@
 var App = Em.Application.create({
   ready: function() {
+    // Here, we check to see if there's data in the query string about vidoes, and if so, create them.
+    count = 0;
     urlParams = getQueryString();
-    for (key in urlParams) {
-      App.videosController.createVideo('http://youtube.com/watch?v=' + urlParams[key]);
+    // Loop through all the videos in the query string.
+    while ('vid' + count in urlParams) {
+      // For each one, grab its URL, volume, and start time, then create it.
+      video = 'http://youtube.com/watch?v=' + urlParams['vid' + count];
+      volume = urlParams['vol' + count];
+      time = urlParams['time' + count];
+      App.videosController.createVideo(video, volume, time);
+      count++;
     }
   }
 });
 
 App.Video = Em.Object.extend({
   url: null,
+  volume: 100,
+  time: 0,
   videoid: function() {
     // Convert the video's URL to its 11-digit YouTube ID.
     var id = this.get('url').split('v=')[1];
@@ -22,29 +32,29 @@ App.Video = Em.Object.extend({
 
 App.videosController = Em.ArrayProxy.create({
   content: [],
-  createVideo: function(url) {
-    var video = App.Video.create({url: url});
+  createVideo: function(url, volume, time) {
+    var video = App.Video.create({url: url, volume: volume, time: time});
     this.pushObject(video);
   },
   toQueryString: function() {
     // Convert all the videos to a query string in the format v1=<video1-ID>&v2=<video2-ID>...
+    // This is used for generating shareable links.
     var linkstring = 'http://tangletube.com?';
     this.forEach(function(item, index) {
-      linkstring += 'v' + index + '=' + item.get('videoid') + '&';
+      linkstring += 'vid' + index + '=' + item.get('videoid') + '&';
+      linkstring += 'vol' + index + '=' + item.get('volume') + '&';
+      linkstring += 'time' + index + '=' + item.get('time') + '&';
     }, this);
     return linkstring;
   }.property('@each.url')
 });
 
 App.AddVideoView = Em.View.extend({
-  tagName: 'form',
-  classNames: ['form-inline'],
-  submit: function() {
+  addVideo: function() {
     event.preventDefault();
-    url = this.$('#linkfield').val();
-    if (url) {
-      App.videosController.createVideo(this.$('#linkfield').val());
-      this.$('#linkfield').val('').focus();
+    if ($('#videoInput').val()) {
+      App.videosController.createVideo($('#videoInput').val(), $('#volumeInput').val(), $('#timeInput').val());
+      $('#videoInput').val('').focus();
     } else {
       alert('Please enter a valid YouTube video URL.');
     }
@@ -54,11 +64,14 @@ App.AddVideoView = Em.View.extend({
 App.VideoView = Em.View.extend({
   tagName: 'li',
   didInsertElement: function() {
-    videoid = this.get('video').get('videoid');
-    $('#videos li#' + this.get('elementId')).tubeplayer({
+    var elid = this.get('elementId');
+    video = this.get('video');
+    $('#videos li#' + elid).tubeplayer({
       width: 470,
       height: 270,
-      initialVideo: videoid
+      initialVideo: video.get('videoid'),
+      start: video.get('time'),
+      volume: video.get('volume')
     });
   },
   delete: function() {

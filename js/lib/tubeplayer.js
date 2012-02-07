@@ -165,6 +165,7 @@
 		color: 'red', // 'red' or 'white'
 		showinfo: false,
 		modestbranding: true,
+    volume: 100,
 		
 		// with respect to [wmode] - 'transparent' maintains z-index, but disables GPU acceleration
 		wmode: 'transparent', // you probably want to use 'window' when optimizing for mobile devices
@@ -384,7 +385,8 @@
 						var $player = $(evt.target).parents("."+TUBE_PLAYER_CLASS);
 						
 						$.tubeplayer.defaults.afterReady($player);
-						
+
+            evt.target.setVolume(o.volume);
 					},
 					
 					'onPlaybackQualityChange': $.tubeplayer.defaults.qualityChange(o.playerID),
