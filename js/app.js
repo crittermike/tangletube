@@ -9,7 +9,7 @@ var App = Em.Application.create({
       video = 'http://youtube.com/watch?v=' + urlParams['vid' + count];
       volume = urlParams['vol' + count];
       time = urlParams['time' + count];
-      App.videosController.createVideo(video, volume, time);
+      App.videosController.createVideo(video, volume, time, true);
       count++;
     }
   }
@@ -19,6 +19,7 @@ App.Video = Em.Object.extend({
   url: null,
   volume: 100,
   time: 0,
+  autoplay: false,
   videoid: function() {
     // Convert the video's URL to its 11-digit YouTube ID.
     var id = this.get('url').split('v=')[1];
@@ -32,8 +33,8 @@ App.Video = Em.Object.extend({
 
 App.videosController = Em.ArrayProxy.create({
   content: [],
-  createVideo: function(url, volume, time) {
-    var video = App.Video.create({url: url, volume: volume, time: time});
+  createVideo: function(url, volume, time, autoplay) {
+    var video = App.Video.create({url: url, volume: volume, time: time, autoplay: autoplay});
     this.pushObject(video);
   },
   toQueryString: function() {
@@ -53,7 +54,7 @@ App.AddVideoView = Em.View.extend({
   addVideo: function() {
     event.preventDefault();
     if ($('#videoInput').val()) {
-      App.videosController.createVideo($('#videoInput').val(), $('#volumeInput').val(), $('#timeInput').val());
+      App.videosController.createVideo($('#videoInput').val(), $('#volumeInput').val(), $('#timeInput').val(), false);
       $('#videoInput').val('').focus();
     } else {
       alert('Please enter a valid YouTube video URL.');
@@ -71,7 +72,8 @@ App.VideoView = Em.View.extend({
       height: 270,
       initialVideo: video.get('videoid'),
       start: video.get('time'),
-      volume: video.get('volume')
+      volume: video.get('volume'),
+      autoPlay: video.get('autoplay')
     });
   },
   delete: function() {

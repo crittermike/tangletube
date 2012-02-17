@@ -20,6 +20,7 @@ body {
 }
 .well {
   overflow: hidden;
+  margin-bottom: 30px;
 }
 .add-button {
   float: left;
@@ -43,19 +44,18 @@ body {
   background: #FFE8E8;
   text-shadow: white 1px 1px;
   border-radius: 10px 0 0 10px;
-  padding-left: 9px;
-  padding-right: 5px;
+  padding: 2px 3px 0 6px;
   position: absolute;
   left: -23px;
   top: 0;
 }
 #videos li:nth-child(2n) button {
   border-radius: 0 10px 10px 0;
-  padding-right: 9px;
-  padding-left: 5px;
+  padding: 2px 6px 0 3px;
   left: auto;
   right: -23px;
 }
+#videos li:hover button,
 #videos li button:hover {
   background: red;
   text-shadow: #FF9696 1px 1px;

@@ -49,9 +49,9 @@
               <div class="btn-group">
                 <button {{action "rewind"}} class="btn"><i class="icon-fast-backward"></i></button>
                 <button {{action "pause"}} class="btn"><i class="icon-pause"></i></button>
-                <button {{action "play"}} class="btn btn-success"><i class="icon-play"></i> Play All</button>
+                <button {{action "play"}} class="btn btn-success"><i class="icon-white icon-play"></i> Play All</button>
               </div>
-              <a id="linkbutton" data-toggle="modal" href="#linkModal" class="btn btn-info"><i class="icon-share"></i> Share Link</a>
+              <a id="linkbutton" data-toggle="modal" href="#linkModal" class="btn btn-info"><i class="icon-white icon-share"></i> Share Link</a>
             {{/view}}
           </script>
 
@@ -61,7 +61,7 @@
           <script type="text/x-handlebars">
             {{#each App.videosController.content}}
               {{#view App.VideoView videoBinding="this"}}
-                <button {{action "delete"}}>X</button>
+                <button {{action "delete"}}><i class="icon-white icon-remove"></i></button>
               {{/view}}
             {{/each}}
           </script>
